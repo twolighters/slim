@@ -1,0 +1,21 @@
+<project name="slim" basedir="..">
+	
+	<target name="build" depends="clean" >
+		
+		<javac
+			destdir="out/classes"
+			srcdir="src" />
+		
+		<jar destfile="out/slim.jar">
+			<fileset dir="out/classes" />
+		</jar>
+		
+	</target>
+	
+	<target name="clean">
+		<delete dir="out" />
+		<mkdir dir="out/classes" />
+	</target>
+	
+	
+</project>
