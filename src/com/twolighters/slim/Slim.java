@@ -17,7 +17,7 @@ public class Slim
 		}
 		else
 		{
-			run(SlimContext.newInstance(args[0]));
+			run(SlimContext.newInstance(args));
 		}
 
 	}

@@ -1,7 +1,9 @@
 package com.twolighters.slim.command;
 
 import com.twolighters.slim.SlimContext;
+import com.twolighters.slim.command.annotations.Token;
 
+@Token(name={"DEF","DEFINE"})
 public class DefineCommand extends AbstractCommand {
 
 	public DefineCommand(SlimContext context)

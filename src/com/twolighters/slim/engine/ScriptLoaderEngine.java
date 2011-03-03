@@ -59,11 +59,11 @@ public class ScriptLoaderEngine extends AbstractEngine
 		IOUtil.close(fin);
 	}
 	
-	private void loadFromClasspath(String resource)
+	private void loadFromClasspath(String resource) throws IOException
 	{
-		//TODO
-		throw new UnsupportedOperationException("Slim does not support classpath loading at this time.");
-		
+		InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(resource);
+		getContext().addRawScript( IOUtil.readLines(is) );
+		IOUtil.close(is);
 	}
 	
 	

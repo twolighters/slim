@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import com.twolighters.slim.SlimContext;
 import com.twolighters.slim.command.annotations.Token;
 
-@Token(token="EXEC")
+@Token(name={"EXEC","EXECUTE"})
 public class ExecuteCommand extends AbstractCommand
 {
 
@@ -16,10 +16,10 @@ public class ExecuteCommand extends AbstractCommand
 		super(context);
 	}
 	
-	@Token(token="FILE")
+	@Token(name="FILE")
 	private String executable = null;
 	
-	@Token(token="UNDOFILE")
+	@Token(name="UNDOFILE")
 	private String undoExecutable = null;
 	
 	public void setExecutable(String executable)

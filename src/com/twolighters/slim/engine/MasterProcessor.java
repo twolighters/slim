@@ -13,6 +13,9 @@ public class MasterProcessor extends AbstractEngine
 	
 	public void run() throws Exception
 	{
+		InitEngine ie = new InitEngine(getContext());
+		ie.run();
+		
 		ScriptLoaderEngine sle = new ScriptLoaderEngine(getContext());
 		sle.run();
 		

@@ -1,5 +1,6 @@
 package com.twolighters.slim.engine;
 
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class CommandRegistryEngine extends AbstractEngine
 	}
 
 
-	private Map<String,Token> registry = new HashMap<String,Token>();
+	private Map<String,Class> registry = new HashMap<String,Class>();
 	
 	public void register()
 	{
@@ -33,13 +34,18 @@ public class CommandRegistryEngine extends AbstractEngine
 	}
 	
 	
-	public Command buildCommand(String[] args)
+	public Object buildCommand(String[] args)
 	{
 		String token = args[0];
-		Token metadata = this.registry.get(token);
-		if (metadata == null)
+		Class commandClass = this.registry.get(token);
+		if (commandClass == null)
 		{
 			throw new RuntimeException("Unknown token: " + token);
+		}
+		
+		for (Constructor c : commandClass.getConstructors())
+		{
+			//TODO
 		}
 		
 		return null;

@@ -11,7 +11,7 @@ import com.twolighters.slim.util.Base64;
 import com.twolighters.slim.util.IOUtil;
 import com.twolighters.slim.util.StringUtil;
 
-@Token(token="GET")
+@Token(name="GET")
 public class GetCommand extends AbstractCommand
 {
 	
@@ -20,7 +20,7 @@ public class GetCommand extends AbstractCommand
 		super(context);
 	}
 
-	@Token(token="FROM")
+	@Token(name="FROM")
 	private String resource = null;
 
 	private String localResource = null;
@@ -28,7 +28,7 @@ public class GetCommand extends AbstractCommand
 	private String saveAs = null;
 	
 	//exepected to be 'username:password'
-	@Token(token="AS")
+	@Token(name="AS")
 	private String credentials = null;
 	
 	

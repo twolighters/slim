@@ -1,14 +1,36 @@
 <project name="slim" basedir="..">
 	
+	<tstamp/>
+	<property name="slim.version" value="0.2" /> 
+	<property name="slim.build.date" value="${TODAY}" />
+	
 	<target name="build" depends="clean" >
 		
 		<javac
 			destdir="out/classes"
 			srcdir="src" />
 		
+<echo file="out/classes/version.properties"># Ant-generated properties
+	
+slim.version=${slim.version}
+slim.build.date=${slim.build.date}
+
+</echo>
+		
 		<jar destfile="out/slim.jar">
 			<fileset dir="out/classes" />
+			<fileset file="src/default.slim" />
+			<manifest>
+				<attribute name="Main-Class"
+			    	value="com.twolighters.slim.Slim"/>
+			</manifest>
 		</jar>
+		
+		<zip destfile="out/slim.zip">
+			<fileset file="out/slim.jar" />
+			<zipfileset file="README" prefix="doc" />
+			<fileset dir="launch" />
+		</zip>
 		
 	</target>
 	

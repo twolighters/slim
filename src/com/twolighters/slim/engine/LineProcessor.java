@@ -52,6 +52,12 @@ public class LineProcessor extends AbstractEngine
 			c.setExecutable(s.substring(5));
 			return c;
 		}
+		if (s.equals("ECHO"))
+		{
+			EchoCommand c = new EchoCommand(getContext());
+			c.setText("");
+			return c;			
+		}		
 		if (s.startsWith("ECHO"))
 		{
 			EchoCommand c = new EchoCommand(getContext());
@@ -87,17 +93,26 @@ public class LineProcessor extends AbstractEngine
 		{
 			int start = result.indexOf('[', searchIndex);
 			int end = result.indexOf(']', searchIndex);
-			searchIndex = end+1;
 			String token = result.substring(start+1,end);
 			getContext().getLogger().trace("token found: " + token);
 			String replacement = tokenReplacementStrategy.replace(token);
 			if (replacement != null)
 			{
 				result = result.substring(0,start) + replacement + result.substring(end+1);
+				searchIndex = start + replacement.length();
 			}
 		}
 		
 		getContext().getLogger().trace("performReplacement out: " + result);
 		return result;
+	}
+	
+	public static void main(String[] args)
+	{
+		System.setProperty("slim.version", "vvvvv");
+		System.setProperty("slim.build.date", "bbb");
+		LineProcessor p = new LineProcessor(SlimContext.newInstance());
+		System.out.println(p.performReplacement("ECHO Slim version [SYS:slim.version], [SYS:slim.build.date]"));
+		
 	}
 }

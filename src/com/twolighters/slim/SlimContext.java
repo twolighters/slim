@@ -1,6 +1,7 @@
 package com.twolighters.slim;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,11 +14,14 @@ public class SlimContext
 	//constants
 	public static String DEFAULT_SCRIPT_FILE = "default.slim";
 	
+	//TODO put args into replacement map
 	
-	private SlimContext(String scriptSource)
+	private SlimContext(String[] args)
 	{
-		this.scriptSource = scriptSource == null ?
-				DEFAULT_SCRIPT_FILE : scriptSource;
+		this.args = args;
+		
+		this.scriptSource = args == null ?
+				DEFAULT_SCRIPT_FILE : args[0];
 	}
 	
 	public static SlimContext newInstance()
@@ -25,16 +29,22 @@ public class SlimContext
 		return newInstance(null);
 	}
 	
-	public static SlimContext newInstance(String scriptSource)
+	public static SlimContext newInstance(String[] args)
 	{
-		return new SlimContext(scriptSource);
+		return new SlimContext(args);
 	}
 
+	private final String[] args;
 	private final String scriptSource;
 	
 	public String getScriptSource()
 	{
 		return this.scriptSource;
+	}
+	
+	public List<String> getArgs()
+	{
+		return new ArrayList<String>(Arrays.asList(this.args));
 	}
 
 
