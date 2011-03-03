@@ -1,0 +1,12 @@
+#! /bin/sh
+
+SCRIPT=$(readlink -f $0)
+SLIM_HOME=`dirname $SCRIPT`
+
+JAVA_COMMAND=$JAVA_HOME/bin/java
+
+if [ "$JAVA_COMMAND" == "/bin/java" ]; then
+  JAVA_COMMAND=java
+fi
+
+$JAVA_COMMAND -jar $SLIM_HOME/slim.jar $*
