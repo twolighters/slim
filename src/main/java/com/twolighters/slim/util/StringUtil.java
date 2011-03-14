@@ -28,7 +28,7 @@ public class StringUtil
 		}
 		else
 		{
-			return url.substring(url.lastIndexOf('/'));
+			return url.substring(url.lastIndexOf('/') + 1);
 		}
 	}
 }

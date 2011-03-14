@@ -1,14 +1,14 @@
 package com.twolighters.slim.log;
 
-public class ConsoleLogger
+public class ConsoleLogger extends AbstractLogger
 {
 
-	private static int DEFAULT_LEVEL = 1; //default to logging at PROD level
-	private int userLevel = -2; //this value wouldn't be valid; must be set in constructor.
+	//default to logging at INFO level
+	private static int DEFAULT_LEVEL = Level.INFO.getValue();
 	
-	private ConsoleLogger(int userLevel)
+	private ConsoleLogger(int loggingLevel)
 	{
-		this.userLevel = userLevel;
+		super(loggingLevel);
 	}
 	
 	public static ConsoleLogger newInstance()
@@ -16,43 +16,15 @@ public class ConsoleLogger
 		return new ConsoleLogger(DEFAULT_LEVEL);
 	}
 	
-	public static ConsoleLogger newInstance(int userLevel)
+	public static ConsoleLogger newInstance(int loggingLevel)
 	{
-		return new ConsoleLogger(userLevel);
+		return new ConsoleLogger(loggingLevel);
 	}
 
-	
-	public void log(Level requestLevel, String message)
+	@Override
+	protected void log(String message)
 	{
-		if (this.userLevel > requestLevel.getValue())
-		{
-			System.out.println(message);
-		}
+		System.out.println(message);		
 	}
-	
-	public void always(String message)
-	{
-		log(Level.ALWAYS, message);
-	}
-	
-	public void prod(String message)
-	{
-		log(Level.PROD, message);
-	}
-	
-	public void info(String message)
-	{
-		log(Level.INFO, message);
-	}
-
-	public void debug(String message)
-	{
-		log(Level.DEBUG, message);
-	}
-
-	public void trace(String message)
-	{
-		log(Level.TRACE, message);
-	}	
 	
 }

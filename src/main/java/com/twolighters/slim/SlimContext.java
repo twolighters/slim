@@ -14,14 +14,20 @@ public class SlimContext
 	//constants
 	public static String DEFAULT_SCRIPT_FILE = "default.slim";
 	
-	//TODO put args into replacement map
 	
 	private SlimContext(String[] args)
 	{
 		this.args = args;
 		
-		this.scriptSource = args == null ?
-				DEFAULT_SCRIPT_FILE : args[0];
+		if (args == null
+				|| args.length == 0)
+		{
+			this.scriptSource = DEFAULT_SCRIPT_FILE;
+		}
+		else
+		{
+			this.scriptSource = args[0];
+		}
 	}
 	
 	public static SlimContext newInstance()
@@ -43,8 +49,11 @@ public class SlimContext
 	}
 	
 	public List<String> getArgs()
-	{
-		return new ArrayList<String>(Arrays.asList(this.args));
+	{		
+		if (args !=null)
+			return new ArrayList<String>(Arrays.asList(this.args));
+		else
+			return new ArrayList<String>();
 	}
 
 

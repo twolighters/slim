@@ -22,8 +22,9 @@ public class GetCommand extends AbstractCommand
 
 	@Token(name="FROM")
 	private String resource = null;
-
-	private String localResource = null;
+	
+	@Token(name="TO")
+	private String destination = null;
 	
 	private String saveAs = null;
 	
@@ -35,6 +36,21 @@ public class GetCommand extends AbstractCommand
 	public void setResource(String resource)
 	{
 		this.resource = resource;
+	}
+	
+	public String getResource()
+	{
+		return this.resource;
+	}
+	
+	public void setDestination(String destination)
+	{
+		this.destination = destination;
+	}
+	
+	public String getDestination()
+	{
+		return this.destination;
 	}
 	
 	public void setSaveAs(String saveAs)
@@ -49,19 +65,24 @@ public class GetCommand extends AbstractCommand
 		this.credentials = credentials;
 	}
 	
+	public String getCredentials()
+	{
+		return this.credentials;
+	}
+	
 
 	@Override
 	public void execute() throws IOException
 	{
 		//build local download path
-		this.localResource = getContext().getWorkDir() + File.separator;
+		String localResource = this.destination + File.separator;
 		if (this.saveAs != null)
 		{
-			this.localResource += this.saveAs;
+			localResource += this.saveAs;
 		}
 		else
 		{
-			this.localResource += StringUtil.urlResourceName(this.resource);
+			localResource += StringUtil.urlResourceName(this.resource);
 		}
 		
 		
@@ -75,7 +96,7 @@ public class GetCommand extends AbstractCommand
              conn.setRequestProperty("Authorization", "Basic " + encoding);
 		}
 		
-		IOUtil.getRemoteContent(conn, this.localResource);
+		IOUtil.getRemoteContent(conn, localResource);
 			
 	}
 
@@ -83,8 +104,6 @@ public class GetCommand extends AbstractCommand
 	public void undo() throws Exception
 	{
 		
-		File file = new File(this.localResource);
-		file.delete();
 		
 		super.undo();
 

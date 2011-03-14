@@ -8,7 +8,7 @@
 		
 		<javac
 			destdir="out/classes"
-			srcdir="src" />
+			srcdir="src/main/java" />
 		
 <echo file="out/classes/version.properties"># Ant-generated properties
 	
@@ -19,16 +19,15 @@ slim.build.date=${slim.build.date}
 		
 		<jar destfile="out/slim.jar">
 			<fileset dir="out/classes" />
-			<fileset file="src/default.slim" />
+			<fileset file="src/main/java/default.slim" />
 			<manifest>
 				<attribute name="Main-Class"
 			    	value="com.twolighters.slim.Slim"/>
 			</manifest>
 		</jar>
 		
-		<zip destfile="out/slim.zip">
+		<zip destfile="out/slim-${slim.version}.zip">
 			<fileset file="out/slim.jar" />
-			<zipfileset file="README" prefix="doc" />
 			<fileset dir="launch" />
 		</zip>
 		

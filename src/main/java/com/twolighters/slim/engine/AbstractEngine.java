@@ -1,23 +1,14 @@
 package com.twolighters.slim.engine;
 
 import com.twolighters.slim.SlimContext;
+import com.twolighters.slim.SlimContextHolder;
 
-public class AbstractEngine
+public class AbstractEngine extends SlimContextHolder
 {
-	private final SlimContext context;
-	
+
 	protected AbstractEngine(SlimContext context)
 	{
-		if (context == null)
-		{
-			throw new IllegalStateException("Null context.");
-		}
-		
-		this.context = context;
+		super(context);
 	}
 	
-	protected SlimContext getContext()
-	{
-		return this.context;
-	}
 }

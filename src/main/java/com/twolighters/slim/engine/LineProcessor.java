@@ -1,11 +1,13 @@
 package com.twolighters.slim.engine;
 
 import com.twolighters.slim.SlimContext;
+import com.twolighters.slim.SlimScriptSyntaxException;
 import com.twolighters.slim.command.Command;
-import com.twolighters.slim.command.DefineCommand;
-import com.twolighters.slim.command.EchoCommand;
-import com.twolighters.slim.command.ExecuteCommand;
-import com.twolighters.slim.command.GetCommand;
+import com.twolighters.slim.command.builder.DefineCommandBuilder;
+import com.twolighters.slim.command.builder.DeleteCommandBuilder;
+import com.twolighters.slim.command.builder.EchoCommandBuilder;
+import com.twolighters.slim.command.builder.ExecuteCommandBuilder;
+import com.twolighters.slim.command.builder.GetCommandBuilder;
 
 /**
  * This needs a lot of work, of course.
@@ -26,56 +28,28 @@ public class LineProcessor extends AbstractEngine
 		
 		if (line==null) return null;
 		String s = line.trim();
-		if (line.equals("")) return null;
+		if (s.equals("")) return null;
 		if (isComment(s)) return null;
 		
 		s = performReplacement(s);
 		
-		if (s.startsWith("GET"))
-		{
-			GetCommand c = new GetCommand(getContext());
-			int as = s.indexOf(" AS");
-			if (as < 0)
-			{
-				c.setResource(s.substring(4));
-			}
-			else
-			{
-				c.setResource(s.substring(4,as));
-				c.setCredentials(s.substring(as+4));
-			}
-			return c;
-		}
-		if (s.startsWith("EXEC"))
-		{
-			ExecuteCommand c = new ExecuteCommand(getContext());
-			c.setExecutable(s.substring(5));
-			return c;
-		}
-		if (s.equals("ECHO"))
-		{
-			EchoCommand c = new EchoCommand(getContext());
-			c.setText("");
-			return c;			
-		}		
-		if (s.startsWith("ECHO"))
-		{
-			EchoCommand c = new EchoCommand(getContext());
-			c.setText(s.substring(5));
-			return c;			
-		}
-		if (s.startsWith("DEFINE"))
-		{
-			DefineCommand c = new DefineCommand(getContext());
-			int as = s.indexOf(" AS");
-			String key = s.substring(7,as);
-			String value = s.substring(as+4);
-			c.setKey(key);
-			c.setValue(value);
-			return c;			
-		}
+		Command c = new GetCommandBuilder(getContext()).build(s);
+		if (c != null) return c;
 		
-		return null;
+		c = new EchoCommandBuilder(getContext()).build(s);
+		if (c != null) return c;
+		
+		c = new ExecuteCommandBuilder(getContext()).build(s);
+		if (c != null) return c;
+		
+		c = new DeleteCommandBuilder(getContext()).build(s);
+		if (c != null) return c;
+
+		c = new DefineCommandBuilder(getContext()).build(s);
+		if (c != null) return c;
+		
+		throw new SlimScriptSyntaxException("Unknown command: " + line);
+
 	}
 	
 	private boolean isComment(String line)
@@ -107,12 +81,5 @@ public class LineProcessor extends AbstractEngine
 		return result;
 	}
 	
-	public static void main(String[] args)
-	{
-		System.setProperty("slim.version", "vvvvv");
-		System.setProperty("slim.build.date", "bbb");
-		LineProcessor p = new LineProcessor(SlimContext.newInstance());
-		System.out.println(p.performReplacement("ECHO Slim version [SYS:slim.version], [SYS:slim.build.date]"));
-		
-	}
+
 }

@@ -1,24 +1,35 @@
 package com.twolighters.slim;
 
+import org.junit.Test;
+
 public class TestSlim
 {
 	
-	private static String SCRIPT
-		//= "/Users/Maso/dev/workspace/slim-scripts/test.slim";
-		= "file:///Users/Maso/dev/workspace/slim-scripts/test.slim";
-	
-	public static void main(String[] args)
+	@Test(expected= SlimContextNotInstantiatedException.class)
+	public void runNull() throws Exception
 	{
+		Slim.run(null);
+	}
+	
+	
+	@Test public void runEmptyContext() throws Exception
+	{
+		Slim.run(SlimContext.newInstance());
+	}
+	
+	
+	@Test public void runContextWithEmptyArgs() throws Exception
+	{
+		String[] args = {};
 		
-		//System.setProperty("slim.log.level", "4");
-		System.setProperty("slim.work.dir", "/Users/Maso/slim-workdir");
+		Slim.run(SlimContext.newInstance(args));
+	}
+	
+	
+	@Test public void runContextWithArgs() throws Exception
+	{
+		String[] args = {"default.slim", "one", "two", "three"};
 		
-		try {
-			//Slim.run(SlimContext.newInstance(SCRIPT));
-			Slim.run(SlimContext.newInstance());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Slim.run(SlimContext.newInstance(args));
 	}
 }
