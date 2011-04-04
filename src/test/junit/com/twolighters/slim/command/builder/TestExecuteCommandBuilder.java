@@ -8,9 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.twolighters.slim.SlimContext;
-import com.twolighters.slim.SlimContextNotInstantiatedException;
-import com.twolighters.slim.SlimScriptSyntaxException;
 import com.twolighters.slim.command.ExecuteCommand;
+import com.twolighters.slim.exceptions.ContextNotInstantiatedException;
+import com.twolighters.slim.exceptions.ScriptSyntaxException;
 
 public class TestExecuteCommandBuilder
 {
@@ -23,7 +23,7 @@ public class TestExecuteCommandBuilder
 		builder = new ExecuteCommandBuilder(context);
 	}
 	
-	@Test(expected= SlimContextNotInstantiatedException.class)
+	@Test(expected= ContextNotInstantiatedException.class)
 	public void nullContext() throws Exception
 	{
 		new ExecuteCommandBuilder(null);
@@ -57,7 +57,7 @@ public class TestExecuteCommandBuilder
 	@Test public void onlyExecutable()
 	{
 		ExecuteCommand c = builder.build("EXEC dir");
-		assertEquals("dir",c.getExecutable());
+		assertEquals("dir",c.getCommand());
 		assertNull(c.getEnv());
 		assertNull(c.getWorkingDir());
 	}
@@ -65,7 +65,7 @@ public class TestExecuteCommandBuilder
 	@Test public void executableAndEnv()
 	{
 		ExecuteCommand c = builder.build("EXEC dir ENV key1=value1,key2=value2");
-		assertEquals("dir",c.getExecutable());
+		assertEquals("dir",c.getCommand());
 		assertNotNull(c.getEnv());
 		assertNull(c.getWorkingDir());
 	}
@@ -73,7 +73,7 @@ public class TestExecuteCommandBuilder
 	@Test public void executableAndWorkDir()
 	{
 		ExecuteCommand c = builder.build("EXEC dir IN /tmp");
-		assertEquals("dir",c.getExecutable());
+		assertEquals("dir",c.getCommand());
 		assertNull(c.getEnv());
 		assertEquals("/tmp",c.getWorkingDir());
 	}
@@ -82,12 +82,12 @@ public class TestExecuteCommandBuilder
 	@Test public void threeArgs()
 	{
 		ExecuteCommand c = builder.build("EXEC dir ENV key1=value1,key2=value2 IN /tmp");
-		assertEquals("dir",c.getExecutable());
+		assertEquals("dir",c.getCommand());
 		assertNotNull(c.getEnv());
 		assertEquals("/tmp",c.getWorkingDir());
 	}
 	
-	@Test(expected= SlimScriptSyntaxException.class)
+	@Test(expected= ScriptSyntaxException.class)
 	public void error1()
 	{
 		builder.build("EXEC unzip -q my.zip");
@@ -96,13 +96,13 @@ public class TestExecuteCommandBuilder
 	@Test public void quotedExecutable()
 	{
 		ExecuteCommand c = builder.build("EXEC \"unzip -q my.zip\"");
-		assertEquals("unzip -q my.zip",c.getExecutable());
+		assertEquals("unzip -q my.zip",c.getCommand());
 	}
 	
 	@Test public void threeArgsQuoted()
 	{
 		ExecuteCommand c = builder.build("EXEC \"unzip -q my.zip\" ENV key1=value1,key2=value2 IN /tmp");
-		assertEquals("unzip -q my.zip",c.getExecutable());
+		assertEquals("unzip -q my.zip",c.getCommand());
 		assertNotNull(c.getEnv());
 		assertEquals("/tmp",c.getWorkingDir());
 	}

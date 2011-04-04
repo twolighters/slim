@@ -7,8 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.twolighters.slim.SlimContext;
-import com.twolighters.slim.SlimContextNotInstantiatedException;
 import com.twolighters.slim.command.GetCommand;
+import com.twolighters.slim.exceptions.ContextNotInstantiatedException;
 
 public class TestGetCommandBuilder
 {
@@ -21,7 +21,7 @@ public class TestGetCommandBuilder
 		builder = new GetCommandBuilder(context);
 	}
 	
-	@Test(expected= SlimContextNotInstantiatedException.class)
+	@Test(expected= ContextNotInstantiatedException.class)
 	public void nullContext() throws Exception
 	{
 		new GetCommandBuilder(null);

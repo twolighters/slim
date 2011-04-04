@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.twolighters.slim.command.locator.CommandMetadata;
+import com.twolighters.slim.data.Timer;
 import com.twolighters.slim.log.ConsoleLogger;
 import com.twolighters.slim.log.LoggerFactory;
 
@@ -112,5 +114,40 @@ public class SlimContext
 	public String getReplacement(String key)
 	{
 		return this.replacementMap.get(key);
+	}
+	
+	
+	//map a command token to a CommandMetadata
+	private Map<String, CommandMetadata> commandMap = new HashMap<String, CommandMetadata>();
+	
+	public void addCommand(String key, CommandMetadata data)
+	{
+		this.commandMap.put(key, data);
+	}
+	
+	public CommandMetadata getCommand(String key)
+	{
+		return this.commandMap.get(key);
+	}
+	
+	private Map<String, Timer> timerMap = new HashMap<String, Timer>();
+	
+	public void addTimer(Timer timer)
+	{
+		this.timerMap.put(timer.getName(), timer);
+	}
+	
+	public Timer getTimer(String name)
+	{
+		return this.timerMap.get(name);
+	}
+	
+	
+	
+	// System properties and derived state
+	
+	public boolean isWindowsOS()
+	{
+		return System.getProperty("os.name").startsWith("Windows");
 	}
 }

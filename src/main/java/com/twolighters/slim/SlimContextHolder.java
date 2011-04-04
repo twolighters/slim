@@ -1,5 +1,7 @@
 package com.twolighters.slim;
 
+import com.twolighters.slim.exceptions.ContextNotInstantiatedException;
+
 public abstract class SlimContextHolder
 {
 	private final SlimContext context;
@@ -8,7 +10,7 @@ public abstract class SlimContextHolder
 	{
 		if (context == null)
 		{
-			throw new SlimContextNotInstantiatedException("Null context inside Slim operation.");
+			throw new ContextNotInstantiatedException("Null context inside Slim operation.");
 		}
 		
 		this.context = context;

@@ -1,8 +1,11 @@
 package com.twolighters.slim.command.builder;
 
 import com.twolighters.slim.SlimContext;
-import com.twolighters.slim.SlimScriptSyntaxException;
 import com.twolighters.slim.command.ExecuteCommand;
+import com.twolighters.slim.command.strategy.ExecuteStrategy;
+import com.twolighters.slim.command.strategy.UnixExecuteXS;
+import com.twolighters.slim.command.strategy.WindowsExecuteXS;
+import com.twolighters.slim.exceptions.ScriptSyntaxException;
 
 public class ExecuteCommandBuilder extends CommandBuilder<ExecuteCommand>
 {
@@ -22,7 +25,12 @@ public class ExecuteCommandBuilder extends CommandBuilder<ExecuteCommand>
 			return null;
 		}
 		
-		ExecuteCommand c = new ExecuteCommand(getContext());
+		//creation pattern for strategies may be annotation-driven later.
+		ExecuteStrategy<ExecuteCommand> xs = getContext().isWindowsOS() ?
+				new WindowsExecuteXS(getContext()) :
+				new UnixExecuteXS(getContext());
+		
+		ExecuteCommand c = new ExecuteCommand(getContext(), xs);
 		String[] tokens = line.split(" ");
 		int mode = 0;
 		String sub = "";
@@ -39,13 +47,13 @@ public class ExecuteCommandBuilder extends CommandBuilder<ExecuteCommand>
 				else if (mode == 11 && token.endsWith("\""))
 				{
 					sub += " " + token.substring(0,token.length()-1);
-					c.setExecutable(sub);
+					c.setCommand(sub);
 					mode=0;
 					continue;
 				}
 				else if (mode == 1)
 				{
-					c.setExecutable(token);
+					c.setCommand(token);
 					mode=0;
 					continue;
 				}
@@ -84,7 +92,7 @@ public class ExecuteCommandBuilder extends CommandBuilder<ExecuteCommand>
 			}
 			else
 			{
-				throw new SlimScriptSyntaxException("Unexpected token: " + token);
+				throw new ScriptSyntaxException("Unexpected token: " + token);
 			}
 
 		}

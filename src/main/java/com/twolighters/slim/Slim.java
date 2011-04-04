@@ -1,6 +1,7 @@
 package com.twolighters.slim;
 
 import com.twolighters.slim.engine.MasterProcessor;
+import com.twolighters.slim.exceptions.ContextNotInstantiatedException;
 
 public class Slim
 {
@@ -31,7 +32,7 @@ public class Slim
 	{
 		if (context == null)
 		{
-			throw new SlimContextNotInstantiatedException("Cannot run Slim without a context.");
+			throw new ContextNotInstantiatedException("Cannot run Slim without a context.");
 		}
 		
 		MasterProcessor processor = new MasterProcessor(context);

@@ -1,38 +1,34 @@
 package com.twolighters.slim.command;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import com.twolighters.slim.SlimContext;
 import com.twolighters.slim.command.annotations.Token;
+import com.twolighters.slim.command.strategy.ExecuteStrategy;
 
 @Token(name={"EXEC","EXECUTE"})
 public class ExecuteCommand extends AbstractCommand
 {
 
-	public ExecuteCommand(SlimContext context)
+	private final ExecuteStrategy<ExecuteCommand> strategy;
+	
+	public ExecuteCommand(SlimContext context, ExecuteStrategy<ExecuteCommand> strategy)
 	{
 		super(context);
+		this.strategy = strategy;
 	}
 	
-	@Token(name="FILE")
-	private String executable = null;
+	@Token(name="COMMAND")
+	private String command = null;
 	private String[] env = null;
 	private String workingDir = null;
 	
-	@Token(name="UNDOFILE")
-	private String undoExecutable = null;
-	
-	public void setExecutable(String executable)
+	public void setCommand(String command)
 	{
-		this.executable = executable;
+		this.command = command;
 	}
 	
-	public String getExecutable()
+	public String getCommand()
 	{
-		return this.executable;
+		return this.command;
 	}
 
 	public void setEnv(String[] env)
@@ -55,34 +51,13 @@ public class ExecuteCommand extends AbstractCommand
 		return this.workingDir;
 	}
 	
-	public void setUndoExecutable(String undoExecutable)
+	
+	@Override
+	public void execute() throws Exception
 	{
-		this.undoExecutable = undoExecutable;
+		this.strategy.execute(this);
 	}
 	
 
-	
-	
-	@Override
-	public void execute() throws IOException
-	{
-		File work = this.workingDir == null ? null : new File(this.workingDir);
-		Process p = Runtime.getRuntime().exec(this.executable, this.env, work);
-		
-		String line;
-		BufferedReader input =
-	        new BufferedReader
-	          (new InputStreamReader(p.getInputStream()));
-	      while ((line = input.readLine()) != null) {
-	        System.out.println(line);
-	      }
-	      input.close();
-	}
-	
-	@Override
-	public void undo() throws IOException
-	{
-		Runtime.getRuntime().exec(this.undoExecutable, null, null);
-	}
 
 }

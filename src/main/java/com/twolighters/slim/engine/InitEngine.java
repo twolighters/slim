@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.twolighters.slim.SlimContext;
+import com.twolighters.slim.data.Timer;
 
 public class InitEngine extends AbstractEngine
 {
@@ -17,8 +18,15 @@ public class InitEngine extends AbstractEngine
 	
 	public void run()
 	{
+		systemTimer();
 		loadVersionProperties();
 		loadCommandLineArgs();
+	}
+	
+	private void systemTimer()
+	{
+		Timer t = new Timer("system");
+		getContext().addTimer(t);
 	}
 	
 	private void loadVersionProperties()

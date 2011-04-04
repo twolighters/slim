@@ -1,13 +1,13 @@
 package com.twolighters.slim.engine;
 
 import com.twolighters.slim.SlimContext;
-import com.twolighters.slim.SlimScriptSyntaxException;
 import com.twolighters.slim.command.Command;
 import com.twolighters.slim.command.builder.DefineCommandBuilder;
 import com.twolighters.slim.command.builder.DeleteCommandBuilder;
 import com.twolighters.slim.command.builder.EchoCommandBuilder;
 import com.twolighters.slim.command.builder.ExecuteCommandBuilder;
 import com.twolighters.slim.command.builder.GetCommandBuilder;
+import com.twolighters.slim.exceptions.ScriptSyntaxException;
 
 /**
  * This needs a lot of work, of course.
@@ -48,7 +48,7 @@ public class LineProcessor extends AbstractEngine
 		c = new DefineCommandBuilder(getContext()).build(s);
 		if (c != null) return c;
 		
-		throw new SlimScriptSyntaxException("Unknown command: " + line);
+		throw new ScriptSyntaxException("Unknown command: " + line);
 
 	}
 	

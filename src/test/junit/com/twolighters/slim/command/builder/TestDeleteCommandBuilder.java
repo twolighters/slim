@@ -7,8 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.twolighters.slim.SlimContext;
-import com.twolighters.slim.SlimContextNotInstantiatedException;
 import com.twolighters.slim.command.DeleteCommand;
+import com.twolighters.slim.exceptions.ContextNotInstantiatedException;
 
 public class TestDeleteCommandBuilder
 {
@@ -21,7 +21,7 @@ public class TestDeleteCommandBuilder
 		builder = new DeleteCommandBuilder(context);
 	}
 	
-	@Test(expected= SlimContextNotInstantiatedException.class)
+	@Test(expected= ContextNotInstantiatedException.class)
 	public void nullContext() throws Exception
 	{
 		new DeleteCommandBuilder(null);

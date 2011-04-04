@@ -2,10 +2,12 @@ package com.twolighters.slim;
 
 import org.junit.Test;
 
+import com.twolighters.slim.exceptions.ContextNotInstantiatedException;
+
 public class TestSlim
 {
 	
-	@Test(expected= SlimContextNotInstantiatedException.class)
+	@Test(expected= ContextNotInstantiatedException.class)
 	public void runNull() throws Exception
 	{
 		Slim.run(null);

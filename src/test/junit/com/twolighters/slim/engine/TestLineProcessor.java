@@ -6,9 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.twolighters.slim.SlimContext;
-import com.twolighters.slim.SlimContextNotInstantiatedException;
-import com.twolighters.slim.SlimScriptSyntaxException;
 import com.twolighters.slim.command.Command;
+import com.twolighters.slim.exceptions.ContextNotInstantiatedException;
+import com.twolighters.slim.exceptions.ScriptSyntaxException;
 
 public class TestLineProcessor
 {
@@ -21,7 +21,7 @@ public class TestLineProcessor
 		processor = new LineProcessor(context);
 	}
 	
-	@Test(expected= SlimContextNotInstantiatedException.class)
+	@Test(expected= ContextNotInstantiatedException.class)
 	public void nullContext() throws Exception
 	{
 		new LineProcessor(null);
@@ -57,7 +57,7 @@ public class TestLineProcessor
 		assertNull(c);
 	}
 	
-	@Test(expected= SlimScriptSyntaxException.class)
+	@Test(expected= ScriptSyntaxException.class)
 	public void unknownCommand()
 	{		
 		Command c = processor.process("UGH i dunno");
