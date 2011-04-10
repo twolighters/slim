@@ -6,6 +6,7 @@ import com.twolighters.slim.command.strategy.ExecuteStrategy;
 import com.twolighters.slim.command.strategy.UnixExecuteXS;
 import com.twolighters.slim.command.strategy.WindowsExecuteXS;
 import com.twolighters.slim.exceptions.ScriptSyntaxException;
+import com.twolighters.slim.util.SysUtil;
 
 public class ExecuteCommandBuilder extends CommandBuilder<ExecuteCommand>
 {
@@ -26,7 +27,7 @@ public class ExecuteCommandBuilder extends CommandBuilder<ExecuteCommand>
 		}
 		
 		//creation pattern for strategies may be annotation-driven later.
-		ExecuteStrategy<ExecuteCommand> xs = getContext().isWindowsOS() ?
+		ExecuteStrategy<ExecuteCommand> xs = SysUtil.isWindowsOS() ?
 				new WindowsExecuteXS(getContext()) :
 				new UnixExecuteXS(getContext());
 		

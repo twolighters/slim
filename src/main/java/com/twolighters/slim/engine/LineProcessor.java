@@ -14,12 +14,12 @@ import com.twolighters.slim.exceptions.ScriptSyntaxException;
  */
 public class LineProcessor extends AbstractEngine
 {
-	private final TokenReplacementStrategy tokenReplacementStrategy;
+	private final ReplacementStrategy tokenReplacementStrategy;
 	
 	protected LineProcessor(SlimContext context)
 	{
 		super(context);
-		this.tokenReplacementStrategy = new TokenReplacementStrategy(context);
+		this.tokenReplacementStrategy = new ReplacementStrategy(context);
 	}
 
 	public Command process(String line)

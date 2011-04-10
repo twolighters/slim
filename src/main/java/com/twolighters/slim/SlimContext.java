@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.twolighters.slim.command.locator.CommandMetadata;
 import com.twolighters.slim.data.Timer;
@@ -116,6 +117,11 @@ public class SlimContext
 		return this.replacementMap.get(key);
 	}
 	
+	public Set<String> getReplacementKeys()
+	{
+		return this.replacementMap.keySet();
+	}
+	
 	
 	//map a command token to a CommandMetadata
 	private Map<String, CommandMetadata> commandMap = new HashMap<String, CommandMetadata>();
@@ -142,12 +148,5 @@ public class SlimContext
 		return this.timerMap.get(name);
 	}
 	
-	
-	
-	// System properties and derived state
-	
-	public boolean isWindowsOS()
-	{
-		return System.getProperty("os.name").startsWith("Windows");
-	}
+
 }
