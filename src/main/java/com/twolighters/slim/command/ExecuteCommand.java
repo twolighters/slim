@@ -51,6 +51,12 @@ public class ExecuteCommand extends AbstractCommand
 		return this.workingDir;
 	}
 	
+	@Override
+	public boolean valid()
+	{
+		//TODO
+		return true;
+	}
 	
 	@Override
 	public void execute() throws Exception

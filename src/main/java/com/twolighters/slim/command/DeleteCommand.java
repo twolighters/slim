@@ -3,6 +3,7 @@ package com.twolighters.slim.command;
 import java.io.File;
 
 import com.twolighters.slim.SlimContext;
+import com.twolighters.slim.exceptions.CommandInvalidStateException;
 import com.twolighters.slim.util.FileUtil;
 
 public class DeleteCommand extends AbstractCommand
@@ -31,10 +32,20 @@ public class DeleteCommand extends AbstractCommand
 		return this.result;
 	}
 	
+	@Override
+	public boolean valid()
+	{
+		return (this.resource != null);
+	}
 	
 	@Override
 	public void execute()
 	{
+		if (!valid())
+		{
+			throw new CommandInvalidStateException("Resource attribute must be set.");
+		}
+		
 		File file = new File(this.resource);
 		if (file.exists())
 		{

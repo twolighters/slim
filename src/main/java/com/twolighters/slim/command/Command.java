@@ -7,5 +7,11 @@ public interface Command
 	void undo() throws Exception;
 	
 	boolean executed();
+	
+	/**
+	 * Indicates the command state is sufficient for execution. 
+	 * @return
+	 */
+	boolean valid();
 
 }

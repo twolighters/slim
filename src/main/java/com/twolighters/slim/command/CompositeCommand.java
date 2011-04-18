@@ -32,11 +32,19 @@ public class CompositeCommand implements Command
 			c.undo();
 		}
 	}
+	
 
 	@Override
 	public boolean executed() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	@Override
+	public boolean valid()
+	{
+		//TODO
+		return true;
 	}
 
 }

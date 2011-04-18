@@ -70,6 +70,13 @@ public class GetCommand extends AbstractCommand
 		return this.credentials;
 	}
 	
+	@Override
+	public boolean valid()
+	{
+		//TODO
+		return true;
+	}
+	
 
 	@Override
 	public void execute() throws IOException

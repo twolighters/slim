@@ -2,6 +2,7 @@ package com.twolighters.slim.command;
 
 import com.twolighters.slim.SlimContext;
 import com.twolighters.slim.command.annotations.Token;
+import com.twolighters.slim.exceptions.CommandInvalidStateException;
 
 @Token(name={"UNZIP"})
 public class UnzipCommand extends AbstractCommand
@@ -38,11 +39,20 @@ public class UnzipCommand extends AbstractCommand
 		return this.destination;
 	}
 	
-	
+	@Override
+	public boolean valid()
+	{
+		return (this.resource != null);
+	}
 	
 	@Override
 	public void execute()
 	{
+		if (!valid())
+		{
+			throw new CommandInvalidStateException("Resource attribute must be set.");
+		}
+		
 		//TODO unzip it!
 	}
 

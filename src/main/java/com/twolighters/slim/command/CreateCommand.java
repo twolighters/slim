@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import com.twolighters.slim.SlimContext;
 import com.twolighters.slim.command.annotations.Token;
+import com.twolighters.slim.exceptions.CommandInvalidStateException;
 
 @Token(name={"CREATE"})
 public class CreateCommand extends AbstractCommand
@@ -42,24 +43,30 @@ public class CreateCommand extends AbstractCommand
 		this.file = file;
 	}
 
+	@Override
+	public boolean valid()
+	{
+		return (this.directory != null || this.file != null);
+	}
 
 
 	@Override
 	public void execute() throws IOException
 	{
-		if (this.directory != null)
+		if (!valid())
+		{
+			throw new CommandInvalidStateException("Either Directory or File attribute must be set.");
+		}
+		
+		if (this.directory != null) //CREATE DIR
 		{
 			File dir = new File(this.directory);
 			dir.mkdirs();
 		}
-		else if (this.file != null)
+		else //CREATE FILE
 		{
 			File f = new File(this.file);
 			f.createNewFile();
-		}
-		else
-		{
-			//TODO exception
 		}
 	}
 
