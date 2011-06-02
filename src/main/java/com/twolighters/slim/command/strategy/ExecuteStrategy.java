@@ -35,6 +35,6 @@ public abstract class ExecuteStrategy<T extends Command> extends SlimContextHold
 	 *  
 	 * @param command
 	 */
-	public abstract void execute(T command) throws Exception;
+	public abstract void execute(T command);
 
 }

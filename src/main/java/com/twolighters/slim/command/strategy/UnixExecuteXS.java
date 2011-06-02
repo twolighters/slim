@@ -14,7 +14,7 @@ public class UnixExecuteXS extends AbstractExecuteXS
 	}
 
 	@Override
-	public void execute(ExecuteCommand command) throws IOException
+	public void execute(ExecuteCommand command)
 	{
 		executeCore(command.getCommand().split(" "), command.getWorkingDir(),
 				command.getEnv());

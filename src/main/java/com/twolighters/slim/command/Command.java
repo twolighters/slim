@@ -2,9 +2,9 @@ package com.twolighters.slim.command;
 
 public interface Command
 {
-	void execute() throws Exception;
+	void execute();
 	
-	void undo() throws Exception;
+	void undo();
 	
 	boolean executed();
 	

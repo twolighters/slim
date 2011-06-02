@@ -59,7 +59,7 @@ public class ExecuteCommand extends AbstractCommand
 	}
 	
 	@Override
-	public void execute() throws Exception
+	public void execute()
 	{
 		this.strategy.execute(this);
 	}

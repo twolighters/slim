@@ -15,7 +15,7 @@ public class WindowsExecuteXS extends AbstractExecuteXS
 	}
 
 	@Override
-	public void execute(ExecuteCommand command) throws IOException
+	public void execute(ExecuteCommand command)
 	{
 		//Consider Windows command line execution.
 		//http://www.javaworld.com/javaworld/jw-12-2000/jw-1229-traps.html?page=4

@@ -7,6 +7,7 @@ import java.net.URLConnection;
 
 import com.twolighters.slim.SlimContext;
 import com.twolighters.slim.command.annotations.Token;
+import com.twolighters.slim.exceptions.CommandExecutionException;
 import com.twolighters.slim.util.Base64;
 import com.twolighters.slim.util.IOUtil;
 import com.twolighters.slim.util.StringUtil;
@@ -79,7 +80,7 @@ public class GetCommand extends AbstractCommand
 	
 
 	@Override
-	public void execute() throws IOException
+	public void execute()
 	{
 		//build local download path
 		String localResource = this.destination + File.separator;
@@ -93,22 +94,29 @@ public class GetCommand extends AbstractCommand
 		}
 		
 		
-		URL urlObj = new URL(this.resource);
-		URLConnection conn = urlObj.openConnection();
-		
-		//set up authentication
-		if (this.credentials != null)
+		try
 		{
-             String encoding = Base64.encode(this.credentials);
-             conn.setRequestProperty("Authorization", "Basic " + encoding);
+			URL urlObj = new URL(this.resource);
+			URLConnection conn = urlObj.openConnection();
+			
+			//set up authentication
+			if (this.credentials != null)
+			{
+	             String encoding = Base64.encode(this.credentials);
+	             conn.setRequestProperty("Authorization", "Basic " + encoding);
+			}
+			
+			IOUtil.getRemoteContent(conn, localResource);
 		}
-		
-		IOUtil.getRemoteContent(conn, localResource);
+		catch (IOException ioe)
+		{
+			throw new CommandExecutionException(ioe);
+		}
 			
 	}
 
 	@Override
-	public void undo() throws Exception
+	public void undo()
 	{
 		
 		

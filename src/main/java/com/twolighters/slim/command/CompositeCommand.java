@@ -11,7 +11,7 @@ public class CompositeCommand implements Command
 	
 
 	@Override
-	public void execute() throws Exception
+	public void execute()
 	{
 		for (Command c : commands)
 		{
@@ -21,7 +21,7 @@ public class CompositeCommand implements Command
 	}
 
 	@Override
-	public void undo() throws Exception
+	public void undo()
 	{
 		//this creates an iterator with the index at the end of the list
 		ListIterator<Command> iter = commands.listIterator(commands.size());

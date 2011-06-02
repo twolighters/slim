@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.twolighters.slim.SlimContext;
 import com.twolighters.slim.command.ExecuteCommand;
+import com.twolighters.slim.exceptions.CommandExecutionException;
 import com.twolighters.slim.util.StringUtil;
 import com.twolighters.slim.util.StringUtil.KeyValue;
 
@@ -20,7 +21,6 @@ public abstract class AbstractExecuteXS extends ExecuteStrategy<ExecuteCommand>
 	}
 	
 	protected void executeCore(String[] splitCommand, String workDir, String[] env)
-		throws IOException
 	{
 		File work = workDir == null ? null : new File(workDir);
 		ProcessBuilder pb = new ProcessBuilder(splitCommand);
@@ -39,16 +39,31 @@ public abstract class AbstractExecuteXS extends ExecuteStrategy<ExecuteCommand>
 			}
 		}
 		
-		Process p = pb.start();
+		try
+		{
+			Process p = pb.start();
 		
-		String line;
-		BufferedReader input =
-	        new BufferedReader
-	          (new InputStreamReader(p.getInputStream()));
-	      while ((line = input.readLine()) != null) {
-	        System.out.println(line);
-	      }
-	      input.close();
+				//TODO the following just logs to console.  rework it.
+				try
+				{
+				String line;
+				BufferedReader input =
+			        new BufferedReader
+			          (new InputStreamReader(p.getInputStream()));
+			      while ((line = input.readLine()) != null) {
+			        System.out.println(line);
+			      }
+			      input.close();
+				}
+				catch (IOException ioe)
+				{
+					//do nothing?
+				}
+		}
+		catch (IOException ioe)
+		{
+			throw new CommandExecutionException(ioe);
+		}
 	}
 
 }

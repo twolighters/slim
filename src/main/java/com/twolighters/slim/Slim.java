@@ -1,7 +1,6 @@
 package com.twolighters.slim;
 
-import com.twolighters.slim.engine.MasterProcessor;
-import com.twolighters.slim.exceptions.ContextNotInstantiatedException;
+import com.twolighters.slim.runner.ConsoleRunner;
 
 public class Slim
 {
@@ -28,15 +27,9 @@ public class Slim
 	 * Provides a Java runtime entry point to Slim.
 	 * @param context
 	 */
-	public static void run(SlimContext context) throws Exception
-	{
-		if (context == null)
-		{
-			throw new ContextNotInstantiatedException("Cannot run Slim without a context.");
-		}
-		
-		MasterProcessor processor = new MasterProcessor(context);
-		processor.run();
+	public static void run(SlimContext context)
+	{		
+		new ConsoleRunner().run(context);
 	}
 	
 

@@ -11,7 +11,7 @@ public class MasterProcessor extends AbstractEngine
 		super(context);
 	}
 	
-	public void run() throws Exception
+	public void run()
 	{
 		InitEngine ie = new InitEngine(getContext());
 		ie.run();

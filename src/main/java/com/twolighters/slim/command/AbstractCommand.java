@@ -27,14 +27,14 @@ public abstract class AbstractCommand extends SlimContextHolder implements Comma
 	
 	
 	@Override
-	public void execute() throws Exception
+	public void execute()
 	{
 		RequiredValidator.validate(this);
 	}
 	
 	
 	@Override
-	public void undo() throws Exception
+	public void undo()
 	{
 		if (!this.executed)
 		{

@@ -51,7 +51,7 @@ public class CreateCommand extends AbstractCommand
 
 
 	@Override
-	public void execute() throws IOException
+	public void execute()
 	{
 		if (!valid())
 		{
@@ -62,11 +62,16 @@ public class CreateCommand extends AbstractCommand
 		{
 			File dir = new File(this.directory);
 			dir.mkdirs();
+			//TODO what if it failed?
 		}
 		else //CREATE FILE
 		{
 			File f = new File(this.file);
-			f.createNewFile();
+			try {
+				f.createNewFile();
+			} catch (IOException ioe) {
+				// TODO what if it failed?
+			}
 		}
 	}
 

@@ -8,6 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.twolighters.slim.SlimContext;
+import com.twolighters.slim.exceptions.ScriptLoadException;
 import com.twolighters.slim.util.IOUtil;
 
 public class ScriptLoaderEngine extends AbstractEngine
@@ -19,7 +20,7 @@ public class ScriptLoaderEngine extends AbstractEngine
 		super(context);
 	}
 	
-	public void run() throws Exception
+	public void run()
 	{
 		String scriptSource = getContext().getScriptSource();
 
@@ -44,26 +45,47 @@ public class ScriptLoaderEngine extends AbstractEngine
 		}
 	}
 	
-	private void loadFromUrl(URL url) throws IOException
-	{		
-		InputStream is = url.openStream();
-		getContext().addRawScript( IOUtil.readLines(is) );
-		IOUtil.close(is);
+	private void loadFromUrl(URL url)
+	{	
+		try
+		{
+			InputStream is = url.openStream();
+			getContext().addRawScript( IOUtil.readLines(is) );
+			IOUtil.close(is);
+		}
+		catch (IOException ioe)
+		{
+			throw new ScriptLoadException(ioe);
+		}
 	}
 	
-	private void loadFromFilesystem(String resource) throws IOException
+	private void loadFromFilesystem(String resource)
 	{
-		File file = new File(resource);
-		FileInputStream fin = new FileInputStream(file);
-		getContext().addRawScript( IOUtil.readLines(fin) );
-		IOUtil.close(fin);
+		try
+		{
+			File file = new File(resource);
+			FileInputStream fin = new FileInputStream(file);
+			getContext().addRawScript( IOUtil.readLines(fin) );
+			IOUtil.close(fin);
+		}
+		catch (IOException ioe)
+		{
+			throw new ScriptLoadException(ioe);
+		}
 	}
 	
-	private void loadFromClasspath(String resource) throws IOException
+	private void loadFromClasspath(String resource)
 	{
-		InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(resource);
-		getContext().addRawScript( IOUtil.readLines(is) );
-		IOUtil.close(is);
+		try
+		{
+			InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(resource);
+			getContext().addRawScript( IOUtil.readLines(is) );
+			IOUtil.close(is);
+		}
+		catch (IOException ioe)
+		{
+			throw new ScriptLoadException(ioe);
+		}
 	}
 	
 	

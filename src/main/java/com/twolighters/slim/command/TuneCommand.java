@@ -20,13 +20,18 @@ public class TuneCommand extends SlimCommand
 	}
 	
 	@Override
-	public void execute() throws Exception
+	public void execute()
 	{
 		
 		while (true)
 		{
 			super.execute();
-			Thread.sleep(this.interval * 1000);
+			try {
+				Thread.sleep(this.interval * 1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				// do nothing?
+			}
 		}
 		
 
