@@ -1,5 +1,6 @@
 package com.twolighters.slim.runner;
 
-public class RunResult {
-
+public class RunResult
+{
+	
 }

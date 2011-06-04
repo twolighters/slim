@@ -1,4 +1,4 @@
-package com.twolighters.slim.engine;
+package com.twolighters.slim.node;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,16 +11,16 @@ import com.twolighters.slim.SlimContext;
 import com.twolighters.slim.exceptions.ScriptLoadException;
 import com.twolighters.slim.util.IOUtil;
 
-public class ScriptLoaderEngine extends AbstractEngine
+public class ScriptLoaderNode extends AbstractNode
 {
 
-	
-	public ScriptLoaderEngine(SlimContext context)
+	public ScriptLoaderNode(SlimContext context)
 	{
 		super(context);
 	}
-	
-	public void run()
+
+	@Override
+	public void execute()
 	{
 		String scriptSource = getContext().getScriptSource();
 

@@ -1,10 +1,11 @@
-package com.twolighters.slim.engine;
+package com.twolighters.slim.node;
 
 import com.twolighters.slim.SlimContext;
+import com.twolighters.slim.SlimContextHolder;
 import com.twolighters.slim.util.CalendarUtil;
 import com.twolighters.slim.util.SysUtil;
 
-public class ReplacementStrategy extends AbstractEngine
+public class ReplacementStrategy extends SlimContextHolder
 {
 	
 	private static String DELIMITER = ":";

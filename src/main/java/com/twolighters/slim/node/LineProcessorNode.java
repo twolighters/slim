@@ -1,4 +1,4 @@
-package com.twolighters.slim.engine;
+package com.twolighters.slim.node;
 
 import com.twolighters.slim.SlimContext;
 import com.twolighters.slim.command.Command;
@@ -9,20 +9,36 @@ import com.twolighters.slim.command.builder.ExecuteCommandBuilder;
 import com.twolighters.slim.command.builder.GetCommandBuilder;
 import com.twolighters.slim.exceptions.ScriptSyntaxException;
 
-/**
- * This needs a lot of work, of course.
- */
-public class LineProcessor extends AbstractEngine
+public class LineProcessorNode extends AbstractNode
 {
-	private final ReplacementStrategy tokenReplacementStrategy;
-	
-	protected LineProcessor(SlimContext context)
+	private ReplacementStrategy tokenReplacementStrategy;
+
+	public LineProcessorNode(SlimContext context)
 	{
 		super(context);
-		this.tokenReplacementStrategy = new ReplacementStrategy(context);
+		this.tokenReplacementStrategy = getReplacementStrategy();
 	}
 
-	public Command process(String line)
+	@Override
+	public void execute()
+	{
+		for (String line : getContext().getRawScript())
+		{
+			Command c = process(line);
+			if (c==null)
+			{
+				getContext().getLogger().trace("command returned: null");
+			}
+			else
+			{
+				getContext().getLogger().trace("command returned: " + c.getClass().getName());
+				c.execute();	
+			}
+			
+		}
+	}
+	
+	private Command process(String line)
 	{
 		getContext().getLogger().trace("LineProcessor: " + line);
 		
@@ -69,7 +85,7 @@ public class LineProcessor extends AbstractEngine
 			int end = result.indexOf(']', searchIndex);
 			String token = result.substring(start+1,end);
 			getContext().getLogger().trace("token found: " + token);
-			String replacement = tokenReplacementStrategy.replace(token);
+			String replacement = this.tokenReplacementStrategy.replace(token);
 			if (replacement != null)
 			{
 				result = result.substring(0,start) + replacement + result.substring(end+1);
@@ -81,5 +97,11 @@ public class LineProcessor extends AbstractEngine
 		return result;
 	}
 	
+	private ReplacementStrategy getReplacementStrategy()
+	{
+		return new ReplacementStrategy(getContext());
+	}
+	
+
 
 }

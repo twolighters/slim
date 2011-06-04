@@ -1,22 +1,14 @@
 package com.twolighters.slim.runner;
 
 import com.twolighters.slim.SlimContext;
-import com.twolighters.slim.engine.MasterProcessor;
-import com.twolighters.slim.exceptions.ContextNotInstantiatedException;
 
-public class ConsoleRunner implements Runner
+public class ConsoleRunner extends AbstractRunner
 {
 
 	@Override
 	public RunResult run(SlimContext context)
 	{
-		if (context == null)
-		{
-			throw new ContextNotInstantiatedException("Cannot run Slim without a context.");
-		}
-		
-		MasterProcessor processor = new MasterProcessor(context);
-		processor.run();
+		super.run(context);
 		
 		return null; //TODO result object
 	}

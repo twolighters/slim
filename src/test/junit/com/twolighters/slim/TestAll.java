@@ -9,8 +9,7 @@ import com.twolighters.slim.command.TestGetCommandViaFullRun;
 import com.twolighters.slim.command.builder.TestDeleteCommandBuilder;
 import com.twolighters.slim.command.builder.TestExecuteCommandBuilder;
 import com.twolighters.slim.command.builder.TestGetCommandBuilder;
-import com.twolighters.slim.engine.TestLineProcessor;
-import com.twolighters.slim.engine.TestReplacementStrategy;
+import com.twolighters.slim.node.TestReplacementStrategy;
 
 
 @RunWith(Suite.class)
@@ -22,7 +21,6 @@ import com.twolighters.slim.engine.TestReplacementStrategy;
     TestDeleteCommandBuilder.class,
     TestExecuteCommandBuilder.class,
     TestGetCommandBuilder.class,
-    TestLineProcessor.class,
     TestReplacementStrategy.class
     })
 public class TestAll

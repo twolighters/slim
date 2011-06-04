@@ -1,4 +1,4 @@
-package com.twolighters.slim.engine;
+package com.twolighters.slim.node;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

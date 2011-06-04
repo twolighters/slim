@@ -1,12 +1,16 @@
 package com.twolighters.slim;
 
 import com.twolighters.slim.runner.ConsoleRunner;
+import com.twolighters.slim.runner.RunResult;
+import com.twolighters.slim.runner.Runner;
 
 public class Slim
 {
 
 	/**
-	 * External entry point to Slim.
+	 * External entry point to Slim.  Defaults to
+	 * ConsoleRunner runner.
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception
@@ -24,12 +28,26 @@ public class Slim
 	
 	
 	/**
-	 * Provides a Java runtime entry point to Slim.
+	 * Provides a Java runtime entry point to Slim,
+	 * defaulting to ConsoleRunner runner.
+	 * 
+	 * Same as Slim.run(new ConsoleRunner(), context)
+	 * 
 	 * @param context
 	 */
-	public static void run(SlimContext context)
+	public static RunResult run(SlimContext context)
 	{		
-		new ConsoleRunner().run(context);
+		return Slim.run(new ConsoleRunner(), context);
+	}
+	
+	/**
+	 * Provides a Java runtime entry point to Slim.
+	 * @param runner  client-specified runner.
+	 * @param context
+	 */
+	public static RunResult run(Runner runner, SlimContext context)
+	{
+		return runner.run(context);
 	}
 	
 
