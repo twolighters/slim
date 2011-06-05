@@ -2,6 +2,7 @@ package com.twolighters.slim.node;
 
 import com.twolighters.slim.SlimContext;
 import com.twolighters.slim.command.Command;
+import com.twolighters.slim.command.builder.CreateCommandBuilder;
 import com.twolighters.slim.command.builder.DefineCommandBuilder;
 import com.twolighters.slim.command.builder.DeleteCommandBuilder;
 import com.twolighters.slim.command.builder.EchoCommandBuilder;
@@ -62,6 +63,9 @@ public class LineProcessorNode extends AbstractNode
 		if (c != null) return c;
 
 		c = new DefineCommandBuilder(getContext()).build(s);
+		if (c != null) return c;
+		
+		c = new CreateCommandBuilder(getContext()).build(s);
 		if (c != null) return c;
 		
 		throw new ScriptSyntaxException("Unknown command: " + line);
